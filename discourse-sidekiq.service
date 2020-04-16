@@ -1,0 +1,13 @@
+[Unit]
+Description=discourse sidekiq service
+After=multi-user.target
+
+[Service]
+WorkingDirectory=/path/to/discourse
+Environment=RAILS_ENV=production
+ExecStart=/usr/local/bundle/bin/bundle exec sidekiq -C config/sidekiq.yml -e production
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

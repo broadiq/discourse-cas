@@ -1,0 +1,8 @@
+---
+production:
+  :concurrency: 15
+  :queues:
+    - [critical, 8]
+    - [default, 4]
+    - [low, 2]
+    - [ultra_low]
