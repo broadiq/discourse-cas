@@ -1,7 +1,7 @@
 FROM ruby:2.6.1
 MAINTAINER John Lutz <jlutz@broadiq.com>
 
-ENV DISCOURSE_VERSION=2.4.1
+ENV DISCOURSE_VERSION=2.5.0.beta1
 #ENV DISCOURSE_VERSION=2.3.0.beta5
 
 ENV RUBY_VERSION="2.6.1"
@@ -106,6 +106,8 @@ RUN mkdir -p /var/discourse/discourse/public/assets/vendor
 RUN /var/discourse/discourse/build-static.sh
 
 RUN chown -R discourse:discourse /var/discourse/discourse
+
+RUN apt-get install -y dos2unix
 
 USER discourse
 

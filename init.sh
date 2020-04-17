@@ -98,6 +98,18 @@ then
 fi
 
 
+if [ -n "$DISCOURSE_MAXMIND_LICENSE_KEY" ]
+then
+  echo "maxmind_license_key = '$DISCOURSE_MAXMIND_LICENSE_KEY'" >> config/discourse.conf
+fi
+
+if [ -n "$DISCOURSE_REFRESH_MAXMIND_DB_DURING_PRECOMPILE_DAYS" ]
+then
+  echo "refresh_maxmind_db_during_precompile_days = '$DISCOURSE_REFRESH_MAXMIND_DB_DURING_PRECOMPILE_DAYS'" >> config/discourse.conf
+fi
+
+
+
 bundle exec rake db:migrate
 #bundle exec sidekiq -d -L log/sidekiq.log -C config/sidekiq.yml -e production
 
