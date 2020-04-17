@@ -29,16 +29,9 @@ echo "db_socket = ''" >> config/discourse.conf
 #echo "redis_port = '30956'" >> config/discourse.conf
 
 
+echo "refresh_maxmind_db_during_precompile_days = 30" >> config/discourse.conf
+echo "maxmind_license_key = '8W8ANZGm2KzvODR8'" >> config/discourse.conf
 
-if [ -n "$DISCOURSE_MAXMIND_LICENSE_KEY" ]
-then
-  echo "maxmind_license_key = '$DISCOURSE_MAXMIND_LICENSE_KEY'" >> config/discourse.conf
-fi
-
-if [ -n "$DISCOURSE_REFRESH_MAXMIND_DB_DURING_PRECOMPILE_DAYS" ]
-then
-  echo "refresh_maxmind_db_during_precompile_days = 30" >> config/discourse.conf
-fi
 
 
 
