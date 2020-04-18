@@ -1,7 +1,7 @@
 FROM ruby:2.6.1
 MAINTAINER John Lutz <jlutz@broadiq.com>
 
-ENV DISCOURSE_VERSION=2.5.0.beta1
+ENV DISCOURSE_VERSION=2.4.1
 #ENV DISCOURSE_VERSION=2.3.0.beta5
 
 ENV RUBY_VERSION="2.6.1"
@@ -20,6 +20,7 @@ RUN apt-get -y install imagemagick
 RUN apt-get -y install advancecomp gifsicle jpegoptim libjpeg-progs optipng pngcrush pngquant
 RUN apt-get -y install jhead
 
+
 RUN gem update --system
 RUN gem install rails
 RUN gem install bundler --force
@@ -30,7 +31,12 @@ RUN curl -sL https://deb.nodesource.com/setup_10.x |  bash -
 RUN apt-get install -y nodejs
 RUN npm install -g svgo
 
-RUN npm install svgo uglify-js@"<3" -g
+#RUN npm install svgo uglify-js@"<3" -g
+
+RUN gem install uglifier
+RUN npm install -g uglify-js
+
+
 RUN mkdir -p /var/discourse
 
 RUN addgroup --gid 1000 discourse \
@@ -72,12 +78,21 @@ RUN addgroup --gid 1000 discourse \
  && bundle exec rake plugin:update plugin=discourse-tooltips \
  && bundle exec rake plugin:update plugin=discourse-topic-previews \
  && bundle exec rake plugin:update plugin=discourse-layouts \
- && bundle exec rake plugin:update plugin=discourse-formatting-toolbar
+ && bundle exec rake plugin:update plugin=discourse-formatting-toolbar \
+ && bundle exec rake maxminddb:get
 
 #RUN find /var/discourse/discourse/vendor/bundle -name tmp -type d -exec rm -rf {} +
 
 ADD config/sidekiq.yml /var/discourse/discourse/config
 RUN chown -R discourse:discourse /var/discourse/discourse/config/sidekiq.yml
+
+ADD config/assets.rake /var/discourse/discourse/lib/tasks
+RUN chown -R discourse:discourse /var/discourse/discourse/lib/tasks/assets.rake
+
+ADD config/production.rb /var/discourse/discourse/config/environments
+RUN chown -R discourse:discourse /var/discourse/discourse/config/environments/production.rb
+
+
 
 WORKDIR /var/discourse/discourse
 
@@ -108,6 +123,10 @@ RUN /var/discourse/discourse/build-static.sh
 RUN chown -R discourse:discourse /var/discourse/discourse
 
 RUN apt-get install -y dos2unix
+
+#RUN gem install uglifier
+#RUN npm install -g uglify-js
+
 
 USER discourse
 
