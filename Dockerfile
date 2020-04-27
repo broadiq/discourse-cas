@@ -81,7 +81,16 @@ RUN addgroup --gid 1000 discourse \
  && bundle exec rake plugin:update plugin=discourse-formatting-toolbar \
  && bundle exec rake maxminddb:get
 
+RUN cd /var/discourse/discourse && bundle exec rake plugin:install repo=https://github.com/ifad/discourse-cas-plugin
+
+
 #RUN find /var/discourse/discourse/vendor/bundle -name tmp -type d -exec rm -rf {} +
+
+ADD cas/plugin.rb /var/discourse/discourse/plugins/discourse-cas-plugin/
+
+ADD cas/settings.yml /var/discourse/discourse/plugins/discourse-cas-plugin/
+
+RUN chown -R discourse:discourse /var/discourse/discourse/plugins/discourse-cas-plugin/
 
 ADD config/sidekiq.yml /var/discourse/discourse/config
 RUN chown -R discourse:discourse /var/discourse/discourse/config/sidekiq.yml

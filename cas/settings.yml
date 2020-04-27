@@ -1,0 +1,30 @@
+cas_sso:
+  cas_sso_url:
+    default: 'https://www.broadiq.com/cas'
+  cas_sso_host:
+    default: 'www.broadiq.com'
+  cas_sso_port:
+    default: '443'
+  cas_sso_path:
+    default: '/cas'
+  cas_sso_ssl:
+    default: true
+  cas_sso_login_url:
+    default: '/login'
+  cas_sso_logout_url:
+    default: '/logout'
+  cas_sso_service_validate_url:
+    default: '/serviceValidate'
+  cas_sso_uid_field:
+    default: 'screenName'
+  cas_sso_name:
+    default: 'fullName'
+  cas_sso_email:
+    default:  'email'
+  cas_sso_email_domain:
+    default:  ''
+  cas_sso_user_auto_create:
+    default:  true
+  cas_sso_user_approved:
+    default:  true
+
