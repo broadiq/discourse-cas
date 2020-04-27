@@ -88,7 +88,7 @@ RUN cd /var/discourse/discourse && bundle exec rake plugin:install repo=https://
 
 ADD cas/plugin.rb /var/discourse/discourse/plugins/discourse-cas-plugin/
 
-ADD cas/settings.yml /var/discourse/discourse/plugins/discourse-cas-plugin/
+ADD cas/settings.yml /var/discourse/discourse/plugins/discourse-cas-plugin/config
 
 RUN chown -R discourse:discourse /var/discourse/discourse/plugins/discourse-cas-plugin/
 
